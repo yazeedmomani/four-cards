@@ -11,6 +11,10 @@ class Player():
     def get_cards(self):
         return self.__cards
 
+    def print_cards(self):
+        for card in self.__cards:
+            print(card)
+
     def receive_card(self, card):
         Card.validate_card(card)
         self.__cards.append(card)
@@ -52,4 +56,4 @@ class Player():
         return False
 
     def __str__(self):
-        return f"{self.__name}"
+        return f"{self.__name.title()}"

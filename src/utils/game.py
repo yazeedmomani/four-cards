@@ -40,20 +40,56 @@ class Game():
     def get_deck(self):
         return self.__deck
 
+    def next_player(self, current_player):
+        for index, player in enumerate(self.__players):
+            if player == current_player:
+                return self.__players[(index + 1) % len(self.__players)]
+        return None
+
     def player_turn(self, player):
         clear_console()
         print(f"{player.get_name().title()}'s turn (only {player.get_name().title()} should look at the screen)")
         print('---------------------------')
         print('\n')
+
+        print('You can only ask about a rank you have in your hand.')
+        print('\n')
+        print('You have the following cards:')
+        player.print_cards()
+        print('\n')
+
         picked_player = self.__pick_player(player)
         print('---------------------------')
         print('\n')
+
         picked_rank = self.__pick_rank()
         print('---------------------------')
         print('\n')
+
+        if not picked_player.has_card_rank(picked_rank):
+            print(f"{picked_player} doesn't have a card with rank {picked_rank}")
+            print('\n')
+            draw_card = self.__deck.draw_card()
+            player.receive_card(draw_card)
+            print(f"You have received {draw_card} from the deck.")
+            print('\n')
+            print('You have the following cards now:')
+            player.print_cards()
+            print('\n')
+            input('Press enter to end your turn...')
+            clear_console()
+            next_player = self.next_player(player)
+            print(f'Now {next_player} look at the screen.')
+            print('\n')
+            input('Press enter to start your turn...')
+            return
+
+
+
         picked_color = self.__pick_color()
         print('---------------------------')
         print('\n')
+
         picked_suit = self.__pick_suit()
         print('---------------------------')
         print('\n')
@@ -66,7 +102,7 @@ class Game():
         print('\n')
         picked_player = None
         while True:
-            picked_player = input('Pick a player: ')
+            picked_player = input('Pick a player to ask: ')
             if picked_player.lower() == player.get_name().lower():
                 print("You can't choose yourself.")
                 continue
