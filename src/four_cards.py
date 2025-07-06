@@ -17,14 +17,17 @@ class FourCards():
         print('Four Cards')
         print('---------------------------')
         while True:
-            name = input('\nEnter player name: ')
+            name = input('\nEnter player name (or "Start" to begin): ')
+            if name.lower() == 'start':
+                if player_count < Game.get_minimum_num_of_players():
+                    print(f"\nMinimum number of players is 3. Please add {Game.get_minimum_num_of_players() - player_count} more player/s.")
+                    continue
+                else:
+                    clear_console()
+                    break
             if name in players:
                 print(f"The name {name} already exists. Please choose a unique name.")
                 continue
             players.append(name)
             player_count += 1
-            if player_count >= Game.get_minimum_num_of_players():
-                if input('\nWould you like to add more players? (Y/N) ') in ['N', 'n']:
-                    clear_console()
-                    break
         return players
