@@ -1,6 +1,7 @@
 from src.utils.player import Player
 from src.utils.deck import Deck
 from src.utils.card import Card
+from src.utils.clear_console import clear_console
 
 class Game():
     __MINIMUM_NUM_OF_PLAYERS = 3
@@ -40,17 +41,29 @@ class Game():
         return self.__deck
 
     def player_turn(self, player):
-        print(f"{player.get_name().title()}'s turn")
+        clear_console()
+        print(f"{player.get_name().title()}'s turn (only {player.get_name().title()} should look at the screen)")
+        print('---------------------------')
+        print('\n')
         picked_player = self.__pick_player(player)
+        print('---------------------------')
+        print('\n')
         picked_rank = self.__pick_rank()
+        print('---------------------------')
+        print('\n')
         picked_color = self.__pick_color()
+        print('---------------------------')
+        print('\n')
         picked_suit = self.__pick_suit()
+        print('---------------------------')
+        print('\n')
 
         # TODO
 
 
     def __pick_player(self, player):
         self.display_players(player)
+        print('\n')
         picked_player = None
         while True:
             picked_player = input('Pick a player: ')
@@ -64,6 +77,7 @@ class Game():
 
     def __pick_rank(self):
         Card.display_valid_ranks()
+        print('\n')
         picked_rank = None
         while True:
             picked_rank = input('Pick a rank: ')
@@ -78,6 +92,7 @@ class Game():
 
     def __pick_suit(self):
         Card.display_valid_suits()
+        print('\n')
         picked_number = None
         while True:
             picked_number = input('Pick a suit (1, 2, 3, 4): ')
@@ -96,6 +111,7 @@ class Game():
 
     def __pick_color(self):
         Card.display_valid_colors()
+        print('\n')
         picked_color = None
         while True:
             picked_color = input('Pick a color: ')
